@@ -2141,3 +2141,7 @@ textarea.input-field {
   }
 
 }
+/* Overrides: hide WhatsApp and Directions CTAs */
+.whatsapp-float, .whatsapp-btn, .directions-btn, .btn-directions {
+  display: none !important;
+}

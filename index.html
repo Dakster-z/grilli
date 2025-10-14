@@ -1206,6 +1206,7 @@
   <!-- 
     - custom js link
   -->
+  <script src="./assets/js/smooth-navigation.js"></script>
   <script src="./assets/js/script.js"></script>
 
   <!-- 
@@ -1214,6 +1215,210 @@
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
+  <script src="./assets/js/enhanced-features.js"></script>
+  <!-- Moroccan Localization System -->
+<script type="text/plain" data-disabled="true">
+// Clear any existing language preference and set to French
+localStorage.removeItem('grilli-language');
+localStorage.setItem('grilli-language', 'fr');
+class MoroccanLocalization {
+  constructor() {
+    this.currentLanguage = this.detectUserLanguage() || localStorage.getItem("currentLanguage") || "fr";
+    this.originalPrices = new Map();
+    this.init();
+  }
+
+  async init() {
+    console.log('🇲🇦 Initializing Moroccan Localization...');
+    this.storeOriginalPrices();
+    this.createLanguageSwitcher();
+    this.applyLanguage(this.currentLanguage);
+    this.setupEventListeners();
+    this.addStyles();
+  }
+
+
+  detectUserLanguage() {
+    // Check browser language
+    const browserLang = navigator.language || navigator.userLanguage;
+    
+    // Map browser languages to supported languages
+    if (browserLang.startsWith("ar")) return "ar";
+    if (browserLang.startsWith("en")) return "en";
+    if (browserLang.startsWith("fr")) return "fr";
+    
+    // Check timezone for regional targeting
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    if (timezone.includes("Casablanca") || timezone.includes("Africa")) return "ar";
+    
+    // Default fallback
+    return null;
+  }
+  storeOriginalPrices() {
+    const priceElements = document.querySelectorAll('.title-2');
+    priceElements.forEach((element, index) => {
+      const text = element.textContent.trim();
+      const usdMatch = text.match(/\$(\d+(?:\.\d{2})?)/);
+      if (usdMatch) {
+        this.originalPrices.set(index, parseFloat(usdMatch[1]));
+      }
+    });
+  }
+
+  createLanguageSwitcher() {
+    const languageSwitcher = document.createElement('div');
+    languageSwitcher.className = 'language-switcher';
+    languageSwitcher.innerHTML = `
+      <div class="language-dropdown">
+        <button class="language-btn" id="currentLanguage">
+          <span class="flag">🇫🇷</span>
+          <span class="lang-text">Français</span>
+          <span class="chevron">▼</span>
+        </button>
+        <div class="language-options" id="languageOptions">
+          <button class="language-option" data-lang="ar">🇲🇦 العربية</button>
+          <button class="language-option" data-lang="fr">🇫🇷 Français</button>
+          <button class="language-option" data-lang="en">🇺🇸 English</button>
+        </div>
+      </div>
+    `;
+    
+    const header = document.querySelector('.header .container');
+    if (header) header.appendChild(languageSwitcher);
+  }
+
+  setupEventListeners() {
+    setTimeout(() => {
+      const languageBtn = document.getElementById('currentLanguage');
+      const languageOptions = document.getElementById('languageOptions');
+
+      if (languageBtn && languageOptions) {
+        languageBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          languageOptions.classList.toggle('active');
+        });
+
+        languageOptions.addEventListener('click', (e) => {
+          const option = e.target.closest('.language-option');
+          if (option) {
+            this.changeLanguage(option.dataset.lang);
+            languageOptions.classList.remove('active');
+          }
+        });
+      }
+    }, 200);
+  }
+
+  changeLanguage(lang) {
+    this.currentLanguage = lang;
+    localStorage.setItem('grilli-language', lang);
+    this.applyLanguage(lang);
+  }
+
+  applyLanguage(lang) {
+    document.documentElement.setAttribute("dir", lang === "ar" ? "rtl" : "ltr");
+    
+    // Update language button display
+    const currentLangBtn = document.getElementById("currentLanguage");
+    if (currentLangBtn) {
+      const flagMap = { ar: "🇲🇦", fr: "🇫��", en: "🇺🇸" };
+      const nameMap = { ar: "العربية", fr: "Français", en: "English" };
+      currentLangBtn.querySelector(".flag").textContent = flagMap[lang];
+      currentLangBtn.querySelector(".lang-text").textContent = nameMap[lang];
+    }
+    
+    // Translate text content
+    // this.translateContent(lang);
+    this.updatePrices();
+  }
+
+  updatePrices() {
+    const priceElements = document.querySelectorAll('.title-2');
+    const exchangeRate = 10.2;
+    
+    priceElements.forEach((element, index) => {
+      const originalPrice = this.originalPrices.get(index);
+      if (originalPrice) {
+        const madAmount = Math.round(originalPrice * exchangeRate);
+        element.textContent = `${madAmount} MAD`;
+        element.style.color = '#d4af37';
+        element.style.fontWeight = 'bold';
+      }
+    });
+  }
+
+  addStyles() {
+    const style = document.createElement('style');
+    style.textContent = `
+      .language-switcher {
+        position: relative;
+        margin-left: 20px;
+        z-index: 1001;
+      }
+      .language-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: #1a1a1a;
+        border: 2px solid #d4af37;
+        border-radius: 6px;
+        padding: 10px 15px;
+        color: #ffffff;
+        cursor: pointer;
+        font-size: 14px;
+        transition: all 0.3s ease;
+      }
+      .language-btn:hover {
+        background: #d4af37;
+        color: #000000;
+      }
+      .language-options {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background: #1a1a1a;
+        border: 2px solid #d4af37;
+        border-radius: 6px;
+        min-width: 160px;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: all 0.3s ease;
+        z-index: 1002;
+      }
+      .language-options.active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+      .language-option {
+        width: 100%;
+        padding: 12px 15px;
+        background: none;
+        border: none;
+        color: #ffffff;
+        cursor: pointer;
+        text-align: left;
+        transition: all 0.3s ease;
+      }
+      .language-option:hover {
+        background: #d4af37;
+        color: #000000;
+      }
+    `;
+    document.head.appendChild(style);
+  }
+}
+
+// Initialize
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => new MoroccanLocalization());
+} else {
+  new MoroccanLocalization();
+}
+</script>
+<script src="./assets/js/morocco-mobile-features.js"></script>
+<script src="./assets/js/conversion-optimization.js"></script>
 </body>
 
 </html>
