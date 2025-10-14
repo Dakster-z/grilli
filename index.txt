@@ -1,6 +1,6 @@
 Grilli - Amazing & Delicious Food
 
-This is a Restaurant html template made by codewithsadee
+This is a Restaurant HTML template customized by Daksster
 
 
 
@@ -341,9 +341,9 @@ Google Map
 
 &copy; 2022 Grilli. All Rights Reserved | Crafted by
 
-https://github.com/codewithsadee
+https://github.com/Dakster-z
 
-codewithsadee
+Daksster
 
 
 

@@ -20,8 +20,7 @@ class ConversionOptimizer {
     this.addUrgencyBanner();
     this.injectTrustStyles();
     this.addTrustSignalsBar();
-    this.injectHeroCTAStyles();
-    this.addHeroCTA();
+    // Removed per request: do not add extra Hero CTA button
     this.injectTopStyles();
     this.addGoTopButton();
   }
@@ -125,7 +124,7 @@ class ConversionOptimizer {
       .co-urgency { position: sticky; top: 0; z-index: 2147483647; background: #111; color: #fff; padding: 10px 14px; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 8px 20px rgba(0,0,0,0.22); }
       .co-urgency__badge { background: #ff3b30; color: #fff; font-weight: 800; padding: 4px 8px; border-radius: 999px; font-size: 12px; letter-spacing: .2px; }
       .co-urgency__text { font-size: 14px; }
-      .co-urgency__close { margin-left: 12px; background: transparent; border: none; color: #bbb; cursor: pointer; font-size: 14px; }
+      .co-urgency__close { margin-inline-start: 12px; background: transparent; border: none; color: #bbb; cursor: pointer; font-size: 14px; }
       .co-urgency__close:hover { color: #fff; }
     `;
     document.head.appendChild(style);
@@ -157,8 +156,8 @@ class ConversionOptimizer {
     style.textContent = `
       .co-trust { position: sticky; top: 0; z-index: 2147483646; background: #faf7f0; color: #111; padding: 8px 12px; display: flex; align-items: center; justify-content: center; gap: 18px; border-bottom: 1px solid rgba(0,0,0,0.08); }
       .co-trust__item { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; }
-      .co-trust__icon { width: 18px; height: 18px; display: inline-block; }
-      @media (max-width: 640px) { .co-trust { flex-wrap: wrap; gap: 10px; } }
+      .co-trust__icon { inline-size: 18px; block-size: 18px; display: inline-block; }
+      @media (max-inline-size: 640px) { .co-trust { flex-wrap: wrap; gap: 10px; } }
     `;
     document.head.appendChild(style);
   }
@@ -212,7 +211,7 @@ class ConversionOptimizer {
       .co-top { position: fixed; right: 20px; bottom: 90px; z-index: 2147483647; width: 46px; height: 46px; border-radius: 50%; background: #111; color: #fff; display: none; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(0,0,0,0.35); cursor: pointer; }
       .co-top:hover { transform: translateY(-1px); box-shadow: 0 14px 28px rgba(0,0,0,0.4); }
       .co-top__icon { width: 20px; height: 20px; display: block; }
-      @media (max-width: 480px) { .co-top { right: 16px; bottom: 82px; width: 42px; height: 42px; } }
+      @media (max-inline-size: 480px) { .co-top { right: 16px; bottom: 82px; width: 42px; height: 42px; } }
     `;
     document.head.appendChild(style);
   }

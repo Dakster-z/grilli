@@ -12,6 +12,21 @@
   <title>Machawi Restaurant - Authentic Moroccan Cuisine in Casablanca</title>
   <meta name="title" content="Machawi Restaurant - Authentic Moroccan Cuisine in Casablanca">
   <meta name="description" content="Experience the finest Moroccan cuisine at Machawi Restaurant in Casablanca. Traditional tagines, couscous, and grilled specialties in an elegant atmosphere. Reservations available.">
+  <link rel="canonical" href="https://TODO_DOMAIN/">
+  <meta name="theme-color" content="#111111">
+
+  <!--
+    - Open Graph & Twitter
+  -->
+  <meta property="og:title" content="Machawi Restaurant - Authentic Moroccan Cuisine in Casablanca">
+  <meta property="og:description" content="Experience the finest Moroccan cuisine at Machawi Restaurant in Casablanca. Traditional tagines, couscous, and grilled specialties in an elegant atmosphere.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://TODO_DOMAIN/">
+  <meta property="og:image" content="https://TODO_DOMAIN/assets/images/hero-slider-1.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Machawi Restaurant - Authentic Moroccan Cuisine in Casablanca">
+  <meta name="twitter:description" content="Experience the finest Moroccan cuisine in the heart of Casablanca.">
+  <meta name="twitter:image" content="https://TODO_DOMAIN/assets/images/hero-slider-1.jpg">
 
   <!-- 
     - favicon
@@ -24,6 +39,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=Forum&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="dns-prefetch" href="https://unpkg.com">
 
   <!-- 
     - custom css link
@@ -37,9 +54,37 @@
   <link rel="preload" as="image" href="./assets/images/hero-slider-2.jpg">
   <link rel="preload" as="image" href="./assets/images/hero-slider-3.jpg">
 
+  <!--
+    - Structured data placeholder
+  -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "TODO_BRAND",
+    "url": "https://TODO_DOMAIN/",
+    "telephone": "TODO_PHONE",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "TODO_ADDRESS",
+      "addressLocality": "TODO_CITY",
+      "addressCountry": "MA"
+    },
+    "servesCuisine": ["Moroccan"],
+    "image": "https://TODO_DOMAIN/assets/images/hero-slider-1.jpg",
+    "priceRange": "$$",
+    "sameAs": [
+      "https://www.instagram.com/TODO_BRAND",
+      "https://www.facebook.com/TODO_BRAND"
+    ]
+  }
+  </script>
+
 </head>
 
 <body id="top">
+
+  <a href="#home" class="skip-link">Skip to main content</a>
 
   <!-- 
     - #PRELOADER
@@ -110,6 +155,7 @@
     - #HEADER
   -->
 
+  
   <header class="header" data-header>
     <div class="container">
 
@@ -117,9 +163,9 @@
         <img src="./assets/images/logo.svg" width="160" height="50" alt="Machawi Restaurant - Home">
       </a>
 
-      <nav class="navbar" data-navbar>
+  <nav class="navbar" id="primary-nav" data-navbar aria-label="Primary navigation">
 
-        <button class="close-btn" aria-label="close menu" data-nav-toggler>
+        <button class="close-btn" aria-label="close menu" data-nav-toggler aria-controls="primary-nav" aria-expanded="false">
           <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
         </button>
 
@@ -127,10 +173,10 @@
           <img src="./assets/images/logo.svg" width="160" height="50" alt="Machawi Restaurant - Home">
         </a>
 
-        <ul class="navbar-list">
+        <ul class="navbar-list" role="menubar">
 
           <li class="navbar-item">
-            <a href="#home" class="navbar-link hover-underline active">
+            <a href="#home" class="navbar-link hover-underline active" aria-current="page">
               <div class="separator"></div>
 
               <span class="span">Home</span>
@@ -200,7 +246,7 @@
         <span class="text text-2" aria-hidden="true">Find A Table</span>
       </a>
 
-      <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+      <button class="nav-open-btn" aria-label="open menu" data-nav-toggler aria-controls="primary-nav" aria-expanded="false">
         <span class="line line-1"></span>
         <span class="line line-2"></span>
         <span class="line line-3"></span>
@@ -229,7 +275,8 @@
           <li class="slider-item active" data-hero-slider-item>
 
             <div class="slider-bg">
-              <img src="./assets/images/hero-slider-1.jpg" width="1880" height="950" alt="" class="img-cover">
+              <img src="./assets/images/hero-slider-1.jpg" width="1880" height="950" alt="Machawi Restaurant hero background"
+                   class="img-cover" loading="eager" fetchpriority="high" decoding="async">
             </div>
 
             <p class="label-2 section-subtitle slider-reveal">Traditional & Hygienic</p>
@@ -254,7 +301,8 @@
           <li class="slider-item" data-hero-slider-item>
 
             <div class="slider-bg">
-              <img src="./assets/images/hero-slider-2.jpg" width="1880" height="950" alt="" class="img-cover">
+              <img src="./assets/images/hero-slider-2.jpg" width="1880" height="950" alt="Seasonal Moroccan dishes hero background"
+                   class="img-cover" loading="eager" fetchpriority="high" decoding="async">
             </div>
 
             <p class="label-2 section-subtitle slider-reveal">authentic moroccan cuisine</p>
@@ -279,7 +327,8 @@
           <li class="slider-item" data-hero-slider-item>
 
             <div class="slider-bg">
-              <img src="./assets/images/hero-slider-3.jpg" width="1880" height="950" alt="" class="img-cover">
+              <img src="./assets/images/hero-slider-3.jpg" width="1880" height="950" alt="Story of flavors hero background"
+                   class="img-cover" loading="eager" fetchpriority="high" decoding="async">
             </div>
 
             <p class="label-2 section-subtitle slider-reveal">traditional amazing & delicious flavorful</p>
@@ -1178,8 +1227,8 @@
       <div class="footer-bottom">
 
         <p class="copyright">
-          &copy; 2024 Machawi. All Rights Reserved | Crafted by <a href="https://github.com/Dakster-z"
-            target="_blank" class="link">codewithsadee</a>
+          &copy; 2024 Machawi. All Rights Reserved | Made by <a href="https://github.com/Dakster-z"
+            target="_blank" class="link">Daksster</a>
         </p>
 
       </div>
@@ -1278,7 +1327,6 @@ class MoroccanLocalization {
         <div class="language-options" id="languageOptions">
           <button class="language-option" data-lang="ar">🇲🇦 العربية</button>
           <button class="language-option" data-lang="fr">🇫🇷 Français</button>
-          <button class="language-option" data-lang="en">🇺🇸 English</button>
         </div>
       </div>
     `;
@@ -1321,7 +1369,7 @@ class MoroccanLocalization {
     // Update language button display
     const currentLangBtn = document.getElementById("currentLanguage");
     if (currentLangBtn) {
-      const flagMap = { ar: "🇲🇦", fr: "🇫��", en: "🇺🇸" };
+      const flagMap = { ar: "🇲🇦", fr: "", en: "🇺🇸" };
       const nameMap = { ar: "العربية", fr: "Français", en: "English" };
       currentLangBtn.querySelector(".flag").textContent = flagMap[lang];
       currentLangBtn.querySelector(".lang-text").textContent = nameMap[lang];
@@ -1352,7 +1400,7 @@ class MoroccanLocalization {
     style.textContent = `
       .language-switcher {
         position: relative;
-        margin-left: 20px;
+        margin-inline-start: 20px;
         z-index: 1001;
       }
       .language-btn {
@@ -1374,12 +1422,12 @@ class MoroccanLocalization {
       }
       .language-options {
         position: absolute;
-        top: 100%;
-        right: 0;
+        inset-block-start: 100%;
+        inset-inline-end: 0;
         background: #1a1a1a;
         border: 2px solid #d4af37;
         border-radius: 6px;
-        min-width: 160px;
+        min-inline-size: 160px;
         opacity: 0;
         visibility: hidden;
         transform: translateY(-10px);
@@ -1392,13 +1440,13 @@ class MoroccanLocalization {
         transform: translateY(0);
       }
       .language-option {
-        width: 100%;
+        inline-size: 100%;
         padding: 12px 15px;
         background: none;
         border: none;
         color: #ffffff;
         cursor: pointer;
-        text-align: left;
+        text-align: start;
         transition: all 0.3s ease;
       }
       .language-option:hover {

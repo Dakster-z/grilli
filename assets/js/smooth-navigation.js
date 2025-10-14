@@ -77,41 +77,106 @@ class SmoothNavigation {
     }
 
     setupMobileMenu() {
-        const navToggleBtn = document.querySelector("[data-nav-toggler]");
-        const navbar = document.querySelector(".navbar");
-        const navLinks = document.querySelectorAll(".navbar-link");
-        
-        if (!navToggleBtn || !navbar) return;
+        const navToggleBtns = document.querySelectorAll('[data-nav-toggler]');
+        const navbar = document.querySelector('.navbar');
+        const overlay = document.querySelector('[data-overlay]');
+        const navLinks = document.querySelectorAll('.navbar-link');
+        let lastToggleBtn = null;
 
-        // Toggle mobile menu
-        navToggleBtn.addEventListener("click", () => {
-            navbar.classList.toggle("active");
-            navToggleBtn.classList.toggle("active");
+        if (navToggleBtns.length === 0 || !navbar) return;
+
+        const setExpanded = (expanded) => {
+            navToggleBtns.forEach(btn => btn.setAttribute('aria-expanded', expanded ? 'true' : 'false'));
+        };
+
+        const focusableSelectors = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+        const trapFocus = (e) => {
+            if (!navbar.classList.contains('active')) return;
+            if (e.key !== 'Tab') return;
+            const focusable = navbar.querySelectorAll(focusableSelectors);
+            if (focusable.length === 0) return;
+            const firstEl = focusable[0];
+            const lastEl = focusable[focusable.length - 1];
+            const current = document.activeElement;
+            if (e.shiftKey) {
+                if (current === firstEl) {
+                    e.preventDefault();
+                    lastEl.focus();
+                }
+            } else {
+                if (current === lastEl) {
+                    e.preventDefault();
+                    firstEl.focus();
+                }
+            }
+        };
+
+        const openMenu = (btn) => {
+            lastToggleBtn = btn || lastToggleBtn;
+            navbar.classList.add('active');
+            if (overlay) overlay.classList.add('active');
+            setExpanded(true);
+            // Move focus inside the menu
+            const firstFocusable = navbar.querySelector(focusableSelectors);
+            if (firstFocusable) firstFocusable.focus();
+            document.addEventListener('keydown', trapFocus);
+        };
+
+        const closeMenu = () => {
+            navbar.classList.remove('active');
+            if (overlay) overlay.classList.remove('active');
+            setExpanded(false);
+            document.removeEventListener('keydown', trapFocus);
+            // Restore focus to the last toggle that opened the menu
+            if (lastToggleBtn) {
+                try { lastToggleBtn.focus(); } catch (_) {}
+            }
+        };
+
+        // Attach togglers (both open and close buttons)
+        navToggleBtns.forEach(btn => {
+            // Ensure ARIA controls is set
+            if (!btn.getAttribute('aria-controls')) {
+                btn.setAttribute('aria-controls', 'primary-nav');
+            }
+            btn.addEventListener('click', () => {
+                const isOpen = navbar.classList.contains('active');
+                if (isOpen) {
+                    closeMenu();
+                } else {
+                    openMenu(btn);
+                }
+                btn.classList.toggle('active');
+            });
         });
 
         // Close menu when clicking on nav links
         navLinks.forEach(link => {
-            link.addEventListener("click", () => {
-                this.closeMobileMenu();
+            link.addEventListener('click', () => {
+                closeMenu();
             });
         });
 
         // Close menu when clicking outside
-        document.addEventListener("click", (e) => {
-            if (!navbar.contains(e.target) && !navToggleBtn.contains(e.target)) {
-                this.closeMobileMenu();
+        document.addEventListener('click', (e) => {
+            const anyToggleContains = Array.from(navToggleBtns).some(btn => btn.contains(e.target));
+            if (!navbar.contains(e.target) && !anyToggleContains) {
+                closeMenu();
             }
         });
     }
 
     closeMobileMenu() {
-        const navbar = document.querySelector(".navbar");
-        const navToggleBtn = document.querySelector("[data-nav-toggler]");
-        
-        if (navbar && navToggleBtn) {
-            navbar.classList.remove("active");
-            navToggleBtn.classList.remove("active");
-        }
+        const navbar = document.querySelector('.navbar');
+        const overlay = document.querySelector('[data-overlay]');
+        const navToggleBtns = document.querySelectorAll('[data-nav-toggler]');
+        if (navbar) navbar.classList.remove('active');
+        if (overlay) overlay.classList.remove('active');
+        navToggleBtns.forEach(btn => {
+            btn.classList.remove('active');
+            btn.setAttribute('aria-expanded', 'false');
+        });
+        document.removeEventListener('keydown', () => {});
     }
 
     // Utility method to scroll to specific section
